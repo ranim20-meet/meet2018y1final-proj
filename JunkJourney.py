@@ -2,15 +2,99 @@ from PIL import Image
 import turtle
 import random
 import math
-
+import time
+from pygame import mixer # Load the required library
 turtle.delay(0)
 
 screen = turtle.Screen()
 screen_x = 700
 screen_y = 1050
 screen.setup(screen_x, screen_y)
+
+run = True
+
+def click(x,y):
+    global run
+    run = False
+
+
+while run:
+    def up():
+        x,y = turtle.pos()
+        turtle.goto(x,y+10)
+
+    turtle.onkeypress(up, "Up")
+    turtle.listen()
+    turtle.speed(1)
+    turtle.hideturtle()
+    screen = turtle.Screen()
+    screen.setup(800,800)
+    yuval=turtle.clone()
+    yuval.pensize(7)
+    yuval.color('green')
+    yuval.shape("arrow")
+    caleb=turtle.clone()
+    caleb.hideturtle()
+    caleb.shape("arrow")
+    screen.bgcolor("light green") 
+    yuval.penup()
+    yuval.goto(150,-300)
+    yuval.left(180)
+    yuval.pendown()
+    yuval.forward(300)
+    yuval.right(90)
+    yuval.forward(500)
+    yuval.left(90)
+    yuval.forward(20)
+    yuval.left(90)
+    yuval.forward(35)
+    yuval.left(90)
+    yuval.forward(20)
+    yuval.left(90)
+    yuval.forward(50)
+    yuval.right(90)
+    yuval.forward(300)
+    yuval.right(90)
+    yuval.forward(15)
+    yuval.right(90)
+    yuval.forward(300)
+    yuval.backward(20)
+    yuval.right(90)
+
+    for i in range(7):
+        yuval.forward(15)
+        yuval.right(90)
+        yuval.forward(20)
+        yuval.right(90)
+        yuval.forward(15)
+        yuval.left(90)
+        yuval.forward(20)
+        yuval.left(90)
+    yuval.right(180)
+    yuval.forward(35)
+    yuval.left(90)
+    yuval.forward(20)
+    yuval.left(90)
+    yuval.forward(35)
+    yuval.left(90)
+    yuval.forward(20)
+    yuval.left(90)
+    yuval.forward(500)
+    caleb.penup()
+    caleb.color('green')
+    caleb.goto(-136,-30)
+    caleb.pendown()
+    caleb.write('Junk\nJourney', font = ('Ariel', 48, 'bold'))
+    turtle.shape("square")
+    turtle.penup()
+    turtle.goto(-120,-90)
+    turtle.write("Click on me to start!",font = ("Arial",20,"normal"))
+    turtle.onclick(run)
+
 player = turtle.Turtle()
 
+x_image = 50
+y_image = 50
 
 bg = Image.open('background.jpeg')
 pix=bg.load()
@@ -20,7 +104,7 @@ turtle.register_shape('thebackground.gif')
 turtle.bgpic('thebackground.gif')
 
 pl = Image.open('papernobg.gif')
-pn=pl.resize((30,30),Image.ANTIALIAS)
+pn=pl.resize((x_image,y_image),Image.ANTIALIAS)
 pn.save('player.gif')
 turtle.register_shape('player.gif')
 
@@ -29,28 +113,28 @@ player.shape('player.gif')
 
 player.penup()
 player.goto(0,450)
-'''
-bins = player.clone()
-binsim = Image.open('bins_crop.png')
-pix = binsim.load()
-binsimN = binsim.resize((700, 100),Image.ANTIALIAS)
-binsimN.save('bins_crop_resize.gif')
-turtle.register_shape('bins_crop_resize.gif')
-bins.shape('bins_crop_resize.gif')
 
-bins.penup()
-bins.goto(0,-400)
-'''
 banana = player.clone()
 banana.goto(0,-600)
 bananaIM = Image.open('banana-peel.png')
 pix = bananaIM.load()
-RbananaIM = bananaIM.resize((30,30),Image.ANTIALIAS)
+RbananaIM = bananaIM.resize((x_image,y_image),Image.ANTIALIAS)
 RbananaIM.save('banana.gif')
 turtle.register_shape('banana.gif')
 banana.shape('banana.gif')
 #banana.speed(10)
 #banana.ht()
+
+can = player.clone()
+canIM = Image.open('crushed-can.png')
+pix = canIM.load()
+RcanIM = canIM.resize((x_image,y_image),Image.ANTIALIAS)
+RcanIM.save('can.gif')
+turtle.register_shape('can.gif')
+can.shape('can.gif')
+can.ht()
+
+
 def move_left():
     x,y = player.pos()
     player.goto(x-20,y)
@@ -61,12 +145,12 @@ def move_right():
 
 def move_down():
     x,y = player.pos()
-    player.goto(x,y-50)
+    player.goto(x,y-10)
 i = 1
 paper_list = []
 paper_num = 0
 
-def make_trash():
+def make_paper():
     global i
     global paper_list, paper_num
     paper = player.clone() #creates a clone of the player
@@ -83,19 +167,16 @@ def make_trash():
     i+=1
     paper_num += 1
     print(paper_list)
-    #move_trash()
-    #if len(paper_list) < 3:
-     #       make_trash()
-
+score_stfu_rani_im_so_super_duper_creative = 0
 count = 0
+time = 100
 def move_trash():
-    global count, paper_num
-    #while len(paper_list) > 0:
+    global count, paper_num, score_stfu_rani_im_so_super_duper_creative, time
     for j in paper_list:  # for moving multiple papers
         #j.speed(3)
         x,y = j.pos()
         j.forward(10)
-        print(j.pos())
+        #print(j.pos())
         if y > 500:
             if j.shape() == 'player.gif':
                 paper_num -= 1
@@ -108,42 +189,42 @@ def move_trash():
                 j.ht() # make the paper disappear
                 paper_list.remove(j)
                 paper_num -= 1
+                score_stfu_rani_im_so_super_duper_creative+=1
+                time -= 7
+                print(score_stfu_rani_im_so_super_duper_creative)
                 del j
             else:
-                print('Game over!')
-                quit()
+                turtle.textinput('Game Over!', 'You picked up the wrong kind of trash! your score is ' + str(score_stfu_rani_im_so_super_duper_creative) +". press 'ok' to finish the game.") 
+                turtle.bye()
+                os._exit(0)
     if paper_num<=4:
-        make_trash()
+        make_paper()
     if count%20 == 0:
-        make_banana()
+        make_trash(banana, banana)
+    if count%30 == 0:
+        make_trash(can, can)
     count += 1
-    turtle.ontimer(move_trash, 100)
-    #print("finish")
+    turtle.ontimer(move_trash, time)
 
-def check_len():
-    if len(paper_list) < 3:
-        make_trash()
         
-def make_banana():
-    bananat = banana.clone()
-    #bananat.speed(3)
-    bananat.shape('banana.gif')
-    bananat.goto(random.randint(-15,15)*20, -400)
-    bananat.left(90)
-    bananat.st()
-    paper_list.append(bananat)
+def make_trash(kind, name):  #make trash acording to name&kind
+    kind = banana.clone()
+    if name == banana:
+        kind.shape('banana.gif')
+    if name == can:
+        kind.shape('can.gif')
+    kind.goto(random.randint(-15,15)*20, -400)
+    kind.left(90)
+    kind.st()
+    paper_list.append(kind)
 
-#turtle.onkeypress(move_trash, "p")
-turtle.onkeypress(make_trash, " ")
+    
+#turtle.onkeypress(make_trash, " ")
 turtle.onkeypress(move_left, "Left")
 turtle.onkeypress(move_right, "Right")
 turtle.onkeypress(move_down, "Down")
-turtle.onkeypress(make_banana, 'b')
 turtle.listen()
 
 move_trash()
-
-
-
 
 turtle.mainloop()
