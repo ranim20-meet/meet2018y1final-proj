@@ -4,6 +4,7 @@ import random
 import math
 import time
 from pygame import mixer # Load the required library
+import os
 turtle.delay(0)
 
 screen = turtle.Screen()
@@ -16,82 +17,90 @@ run = True
 def click(x,y):
     global run
     run = False
+    print('click')
+turtle.delay(0)
+turtle.speed(1)
+turtle.hideturtle()
+yuval=turtle.clone()
+yuval.pensize(7)
+yuval.color('green')
+yuval.shape("arrow")
+caleb=turtle.clone()
+caleb.hideturtle()
+caleb.shape("arrow")
+screen.bgcolor("light green") 
+yuval.penup()
+yuval.goto(150,-300)
+yuval.left(180)
+yuval.pendown()
+yuval.forward(300)
+yuval.right(90)
+yuval.forward(500)
+yuval.left(90)
+yuval.forward(20)
+yuval.left(90)
+yuval.forward(35)
+yuval.left(90)
+yuval.forward(20)
+yuval.left(90)
+yuval.forward(50)
+yuval.right(90)
+yuval.forward(300)
+yuval.right(90)
+yuval.forward(15)
+yuval.right(90)
+yuval.forward(300)
+yuval.backward(20)
+yuval.right(90)
 
-
-while run:
-    def up():
-        x,y = turtle.pos()
-        turtle.goto(x,y+10)
-
-    turtle.onkeypress(up, "Up")
-    turtle.listen()
-    turtle.speed(1)
-    turtle.hideturtle()
-    screen = turtle.Screen()
-    screen.setup(800,800)
-    yuval=turtle.clone()
-    yuval.pensize(7)
-    yuval.color('green')
-    yuval.shape("arrow")
-    caleb=turtle.clone()
-    caleb.hideturtle()
-    caleb.shape("arrow")
-    screen.bgcolor("light green") 
-    yuval.penup()
-    yuval.goto(150,-300)
-    yuval.left(180)
-    yuval.pendown()
-    yuval.forward(300)
-    yuval.right(90)
-    yuval.forward(500)
-    yuval.left(90)
-    yuval.forward(20)
-    yuval.left(90)
-    yuval.forward(35)
-    yuval.left(90)
-    yuval.forward(20)
-    yuval.left(90)
-    yuval.forward(50)
-    yuval.right(90)
-    yuval.forward(300)
-    yuval.right(90)
+for i in range(7):
     yuval.forward(15)
     yuval.right(90)
-    yuval.forward(300)
-    yuval.backward(20)
+    yuval.forward(20)
     yuval.right(90)
-
-    for i in range(7):
-        yuval.forward(15)
-        yuval.right(90)
-        yuval.forward(20)
-        yuval.right(90)
-        yuval.forward(15)
-        yuval.left(90)
-        yuval.forward(20)
-        yuval.left(90)
-    yuval.right(180)
-    yuval.forward(35)
+    yuval.forward(15)
     yuval.left(90)
     yuval.forward(20)
     yuval.left(90)
-    yuval.forward(35)
-    yuval.left(90)
-    yuval.forward(20)
-    yuval.left(90)
-    yuval.forward(500)
-    caleb.penup()
-    caleb.color('green')
-    caleb.goto(-136,-30)
-    caleb.pendown()
-    caleb.write('Junk\nJourney', font = ('Ariel', 48, 'bold'))
-    turtle.shape("square")
-    turtle.penup()
-    turtle.goto(-120,-90)
-    turtle.write("Click on me to start!",font = ("Arial",20,"normal"))
-    turtle.onclick(run)
+yuval.right(180)
+yuval.forward(35)
+yuval.left(90)
+yuval.forward(20)
+yuval.left(90)
+yuval.forward(35)
+yuval.left(90)
+yuval.forward(20)
+yuval.left(90)
+yuval.forward(500)
+caleb.penup()
+caleb.color('green')
+caleb.goto(-136,-30)
+caleb.pendown()
+caleb.write('Junk\nJourney', font = ('Ariel', 48, 'bold'))
+turtle.shape("square")
+turtle.penup()
+turtle.goto(-120,-90)
+turtle.write("Click on me to start!",font = ("Arial",20,"normal"))
+    
+while run:
+    # do nothing
+    turtle.st()
+    turtle.onclick(click)
+    turtle.listen()
 
+turtle.clear()
+caleb.clear()
+yuval.clear()
+turtle.ht()
+screen.clear()
+turtle.textinput('Instructions', 'Welcome to our game',)
+turtle.textinput('Instructions','Move Right, Left and Down using the arrow keys')
+turtle.textinput('Instructions', 'Take ONLY trash from your kind, or DIE!')
+turtle.textinput('Instructions', 'When the recycling bins appear, try to get to the right bin for you.')
+turtle.textinput('Instructions', 'Good Luck!')
+turtle.delay(0)
 player = turtle.Turtle()
+
 
 x_image = 50
 y_image = 50
@@ -116,7 +125,7 @@ player.goto(0,450)
 
 banana = player.clone()
 banana.goto(0,-600)
-bananaIM = Image.open('banana-peel.png')
+bananaIM = Image.open('banana-peel .gif')
 pix = bananaIM.load()
 RbananaIM = bananaIM.resize((x_image,y_image),Image.ANTIALIAS)
 RbananaIM.save('banana.gif')
@@ -125,15 +134,38 @@ banana.shape('banana.gif')
 #banana.speed(10)
 #banana.ht()
 
-can = player.clone()
-canIM = Image.open('crushed-can.png')
-pix = canIM.load()
-RcanIM = canIM.resize((x_image,y_image),Image.ANTIALIAS)
-RcanIM.save('can.gif')
-turtle.register_shape('can.gif')
-can.shape('can.gif')
-can.ht()
+can = player.clone() # Makes a turtle
+canIM = Image.open('crushed-can.gif') # Sets canIM to thr image you want
+pix = canIM.load() # Alow us to acces the pixels of the image
+RcanIM = canIM.resize((x_image,y_image),Image.ANTIALIAS) # Resize the image to x_image, y_image
+RcanIM.save('can.gif') #saves the new image. Remember to save as .gif!
+turtle.register_shape('can.gif') # Make can.gif a valid turtle shape
+can.shape('can.gif') # Sets the shape of can to can.gif
+can.ht() # Hides the turtle so we cant se it
 
+glass = player.clone()
+glassIM = Image.open('bottle.gif')
+pix = glassIM.load()
+RglassIM = glassIM.resize((x_image,y_image),Image.ANTIALIAS)
+RglassIM.save('glass.gif')
+turtle.register_shape('glass.gif')
+glass.shape('glass.gif')
+glass.ht()
+
+
+bin_list = []
+bin_pic = ['Blue_bin.gif', 'Brown_bin.gif', 'Yellow_bin.gif', 'Green_bin.gif', 'Red_bin.gif']
+bin_open = ['blueBin.gif', 'brownBin.gif', 'yellowBin.gif', 'greenBin.gif', 'redBin.gif']
+for i in range(5):
+    bin_list.append(player.clone())
+    canIM = Image.open(bin_open[i]) # Sets canIM to thr image you want
+    pix = canIM.load() # Alow us to acces the pixels of the image
+    RcanIM = canIM.resize((100,100),Image.ANTIALIAS) # Resize the image to x_image, y_image
+    RcanIM.save(bin_pic[i]) #saves the new image. Remember to save as .gif!
+    turtle.register_shape(bin_pic[i]) # Make can.gif a valid turtle shape
+    bin_list[i].shape(bin_pic[i]) # Sets the shape of can to can.gif
+    bin_list[i].ht() # Hides the turtle so we cant se it
+    
 
 def move_left():
     x,y = player.pos()
@@ -166,12 +198,16 @@ def make_paper():
     paper_list.append(paper)
     i+=1
     paper_num += 1
-    print(paper_list)
+    #print(paper_list)
 score_stfu_rani_im_so_super_duper_creative = 0
 count = 0
 time = 100
+xBin = 0
+yBin = 0
+bin_list_pos = []
 def move_trash():
-    global count, paper_num, score_stfu_rani_im_so_super_duper_creative, time
+    global count, paper_num, score_stfu_rani_im_so_super_duper_creative, time, xBin, yBin, bin_list_pos
+    kind_trash = player.shape()
     for j in paper_list:  # for moving multiple papers
         #j.speed(3)
         x,y = j.pos()
@@ -183,41 +219,84 @@ def move_trash():
             j.ht()
             paper_list.remove(j)    
             print("finish")
-        if player.pos() == j.pos():
+        x1,y1 = player.pos()
+        x2,y2 = j.pos()
+        if abs(x1-x2) < 40 and abs(y1-y2) < 40:
             print("shape of trash: ",j.shape())
-            if j.shape() == 'player.gif':
+            if j.shape() == kind_trash:
                 j.ht() # make the paper disappear
                 paper_list.remove(j)
                 paper_num -= 1
                 score_stfu_rani_im_so_super_duper_creative+=1
-                time -= 7
+                if time > 2:
+                    time -= 7
                 print(score_stfu_rani_im_so_super_duper_creative)
                 del j
             else:
-                turtle.textinput('Game Over!', 'You picked up the wrong kind of trash! your score is ' + str(score_stfu_rani_im_so_super_duper_creative) +". press 'ok' to finish the game.") 
-                turtle.bye()
-                os._exit(0)
+                j.ht()
+                turtle.textinput('Game Over!', 'You picked up the wrong kind of trash! you scored ' + str(score_stfu_rani_im_so_super_duper_creative) +" points. press 'ok' to finish the game.") 
+                screen.clear()
+                player.ht()
+                #turtle.bye()
+            #while True:
+                turtle1 = turtle.Turtle()
+                screen1 = turtle.Screen()
+                screen1.bgcolor('black')
+                pic = turtle1.clone()
+                pic.penup()
+                turtle.register_shape('gameOverTrash.gif')
+                pic.shape('gameOverTrash.gif')
+                turtle1.hideturtle()
+                turtle1.goto(-260,250)
+                turtle1.color('red')
+                turtle1.write('GAME OVER', font=('Ariel', 60, 'bold'))
+                turtle1.color('red')
+                turtle1.goto(-225,-270)
+                turtle1.write('Click anywhere to play another game', font=('Ariel', 18, 'bold'))
+                turtle.exitonclick()
+    x1,y1 = player.pos()       
     if paper_num<=4:
         make_paper()
     if count%20 == 0:
-        make_trash(banana, banana)
+        make_trash(banana, 'banana')
     if count%30 == 0:
-        make_trash(can, can)
+        make_trash(can, 'can')
+    if count%15 == 0:
+        make_trash(glass,'glass')
+    if count == 500:
+        make_bins(int(-300))
+    if count > 500:
+        for i in range(len(bin_list_pos)):
+            xBin, yBin = bin_list_pos[i]
+            if abs(x1-xBin) < 40 and abs (y1-yBin) < 40:
+                if bin_list[i].shape() == 'Blue_bin.gif':
+                    turtle.textinput("Correct recycling bin!", 'You made it! good job! you scored ' + str(score_stfu_rani_im_so_super_duper_creative) + " points")
+                    turtle.bye()
+                    os._exit(0)
+                else:
+                    turtle.textinput('Game Over!', 'You went into the wrong recycling bin! you scored ' + str(score_stfu_rani_im_so_super_duper_creative) +" points. press 'ok' to finish the game.") 
+                    turtle.bye()
+                    os._exit(0)
     count += 1
     turtle.ontimer(move_trash, time)
 
         
 def make_trash(kind, name):  #make trash acording to name&kind
     kind = banana.clone()
-    if name == banana:
-        kind.shape('banana.gif')
-    if name == can:
-        kind.shape('can.gif')
-    kind.goto(random.randint(-15,15)*20, -400)
+    kind.shape(name + ".gif")
+    kind.goto(random.randint(-15,15)*20, -500)
     kind.left(90)
     kind.st()
     paper_list.append(kind)
 
+
+def make_bins(x):
+    global xBin, yBin, bin_list_pos
+    for Bin in bin_list:
+        Bin.st()
+        Bin.goto(x,-400)
+        bin_list_pos.append(Bin.pos())
+        x+=150
     
 #turtle.onkeypress(make_trash, " ")
 turtle.onkeypress(move_left, "Left")
